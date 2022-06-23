@@ -25,14 +25,15 @@ if __name__ == '__main__':
             agent.store_memory(observation,action,reward,observation_new, done)
             agent.learn()
             observation = observation_new
-            scores_window.append(score) 
-            scores.append(score)        
-            print('\rEpisode {}\tAverage Score: {:.2f}'.format(i, np.mean(scores_window)), end="")
-            if i % 100 == 0:
-                print('\rEpisode {}\tAverage Score: {:.2f}'.format(i, np.mean(scores_window)))
-            if np.mean(scores_window)>=200.0:
-                print('\nEnvironment solved in {:d} episodes!\tAverage Score: {:.2f}'.format(i-100, np.mean(scores_window)))
+        scores_window.append(score) 
+        scores.append(score)        
+        print('\rEpisode {}\tAverage Score: {:.2f}'.format(i, np.mean(scores_window)), end="")
+        if i % 100 == 0:
+            print('\rEpisode {}\tAverage Score: {:.2f}'.format(i, np.mean(scores_window)))
+        if np.mean(scores_window)>=200.0:
+            print('\nEnvironment solved in {:d} episodes!\tAverage Score: {:.2f}'.format(i-100, np.mean(scores_window)))
             torch.save(agent.qnetwork_local.state_dict(), 'checkpoint.pth')
+            break
             
     
 

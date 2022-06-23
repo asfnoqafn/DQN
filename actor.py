@@ -3,7 +3,7 @@ import torch as T
 import numpy as np
 
 class Agent():
-    def __init__(self, gamma, epsilon, lr, state_size, batch_size, action_size, max_memory_size = 100000, episode_end = 0.01 ,episode_decrement = 0.0005):
+    def __init__(self, gamma, epsilon, lr, state_size, batch_size, action_size, max_memory_size = 100000, episode_end = 0.05 ,episode_decrement = 5e-4):
          self.gamma = gamma
          self.epsilon = epsilon
          self.lr = lr
@@ -14,7 +14,7 @@ class Agent():
          self.episode_min = episode_end
          self.episode_decrement = episode_decrement
          self.meomory_counter = 0
-         self.qnetwork_local = QNetwork(self.lr, state_size = state_size, action_size = action_size, seed = 0)
+         self.qnetwork_local = QNetwork(self.lr, state_size = state_size, action_size = action_size, seed = 42)
 
          self.Q_eval = QNetwork(self.lr,state_size= state_size, action_size= action_size, seed= 0)
 
@@ -71,8 +71,8 @@ class Agent():
         loss.backward()
         self.Q_eval.optimizer.step()
 
-        self.epsilon = self.epsilon - self.episode_decrement  if self.epsilon > self.episode_min  else self.episode_min
-
+        self.epsilon = self.epsilon - self.episode_decrement \
+            if self.epsilon > self.episode_min else self.episode_min
 
         
 
